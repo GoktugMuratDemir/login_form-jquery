@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <div class='bold-line'></div>
+  <div class='container'>
+
+    <div class='window'>
+      
+      <div class='overlay'></div>
+
+      <div class='content'>
+        <div class='welcome'>Hello There!</div>
+        <div class='subtitle'>We're almost done. Before using our services you need to create an account.</div>
+      
+        <form id="login-form">
+          <div class='input-fields'>
+            <input type='text' name='username' placeholder='Username' class='input-line full-width'></input>
+            <input type="password" name="password" placeholder="Password" class='input-line full-width'></input>
+          </div>
+          
+          <div class='spacing'>or continue with <span class='highlight'>Facebook</span></div>
+          <div class="user-info">
+            <p>mor_2314</p>
+            <p>83r5^_</p>
+          </div>
+          <div><button type="submit" class='ghost-round full-width'>Create Account</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $('#login-form').submit(function (event) {
+        event.preventDefault();
+  
+        var username = $('input[name="username"]').val();
+        var password = $('input[name="password"]').val();
+  
+        if (username === "" || password === "") {
+          alert("Username and password cannot be empty.");
+          return;
+        }
+  
+        $.ajax({
+          type: "POST",
+          url: "https://fakestoreapi.com/auth/login",
+          data: { username: username, password: password },
+          success: function (response) {
+            // Handle success
+            console.log(response);
+            $('#login-form button').css('background-color', 'green');
+            $('.message').remove();
+            $('#login-form').after('<div class="message" style="color:green;">Giriş başarılı</div>');
+          },
+          error: function (xhr, status, error) {
+            // Handle error
+            console.log(error);
+            $('#login-form button').css('background-color', 'red');
+            $('.message').remove();
+            $('#login-form').after('<div class="message" style="color:red;">Giriş bilgileri hatalı</div>');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
